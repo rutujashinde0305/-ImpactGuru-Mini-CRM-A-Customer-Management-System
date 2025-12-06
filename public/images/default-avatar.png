@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#e5e7eb"/>
+  
+  <!-- User Circle -->
+  <circle cx="100" cy="70" r="35" fill="#9ca3af"/>
+  
+  <!-- User Body -->
+  <path d="M 60 120 Q 60 110 70 110 L 130 110 Q 140 110 140 120 L 140 160 Q 140 170 130 170 L 70 170 Q 60 170 60 160 Z" fill="#9ca3af"/>
+  
+  <!-- Alternative text -->
+  <text x="100" y="180" font-size="12" text-anchor="middle" fill="#6b7280" font-family="Arial">User Avatar</text>
+</svg>
