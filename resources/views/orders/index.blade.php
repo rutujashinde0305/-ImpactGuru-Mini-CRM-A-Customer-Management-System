@@ -71,9 +71,13 @@
                                         <td class="px-6 py-4">{{ $order->id }}</td>
                                         <td class="px-6 py-4 font-medium">{{ $order->order_number }}</td>
                                         <td class="px-6 py-4">
-                                            <a href="{{ route('customers.show', $order->customer) }}" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400">
-                                                {{ $order->customer->name }}
-                                            </a>
+                                            @if($order->customer)
+                                                <a href="{{ route('customers.show', $order->customer) }}" class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-400">
+                                                    {{ $order->customer->name }}
+                                                </a>
+                                            @else
+                                                <span class="text-gray-500 dark:text-gray-400 italic">Customer deleted</span>
+                                            @endif
                                         </td>
                                         <td class="px-6 py-4 text-right font-medium">
                                             ${{ number_format($order->amount, 2) }}

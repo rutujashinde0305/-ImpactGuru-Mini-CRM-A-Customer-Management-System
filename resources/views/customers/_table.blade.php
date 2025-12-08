@@ -3,6 +3,7 @@
     <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-300 dark:border-gray-600">
         <tr>
             <th class="px-6 py-3 text-left font-semibold">#</th>
+            <th class="px-6 py-3 text-left font-semibold">Image</th>
             <th class="px-6 py-3 text-left font-semibold">Name</th>
             <th class="px-6 py-3 text-left font-semibold">Email</th>
             <th class="px-6 py-3 text-left font-semibold">Phone</th>
@@ -13,6 +14,17 @@
         @forelse($customers as $c)
             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
                 <td class="px-6 py-4">{{ $c->id }}</td>
+                <td class="px-6 py-4">
+                    @if($c->profile_image)
+                        <img src="{{ asset('storage/' . $c->profile_image) }}" 
+                             alt="{{ $c->name }}" 
+                             class="w-10 h-10 rounded-full object-cover">
+                    @else
+                        <div class="w-10 h-10 rounded-full bg-gray-400 dark:bg-gray-600 flex items-center justify-center text-white font-bold text-sm">
+                            {{ substr($c->name, 0, 1) }}
+                        </div>
+                    @endif
+                </td>
                 <td class="px-6 py-4 font-medium">{{ $c->name }}</td>
                 <td class="px-6 py-4">{{ $c->email }}</td>
                 <td class="px-6 py-4">{{ $c->phone }}</td>

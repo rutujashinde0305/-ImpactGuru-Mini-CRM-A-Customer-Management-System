@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -30,6 +31,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
+            'profile_image' => 'nullable|image|max:2048',
             'role' => 'required|in:admin,staff',
         ]);
 
@@ -38,12 +40,18 @@ class UserController extends Controller
             return back()->withErrors(['role' => 'An admin already exists. Only one admin allowed.'])->withInput();
         }
 
-        User::create([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-        ]);
+        ];
+
+        if ($request->hasFile('profile_image')) {
+            $data['profile_image'] = $request->file('profile_image')->store('profile_images','public');
+        }
+
+        User::create($data);
 
         return redirect()->route('users.index')->with('success','User created');
     }
@@ -59,6 +67,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => 'nullable|string|min:6|confirmed',
+            'profile_image' => 'nullable|image|max:2048',
             'role' => 'required|in:admin,staff',
         ]);
 
@@ -71,6 +80,12 @@ class UserController extends Controller
         $user->role = $request->role;
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
+        }
+        if ($request->hasFile('profile_image')) {
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+            $user->profile_image = $request->file('profile_image')->store('profile_images','public');
         }
         $user->save();
 

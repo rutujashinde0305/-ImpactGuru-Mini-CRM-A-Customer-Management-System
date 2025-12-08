@@ -2,52 +2,40 @@
 
 namespace App\Notifications;
 
-use App\Models\Order;
+use App\Models\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewOrderNotification extends Notification implements ShouldQueue
+class NewCustomerNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected Order $order;
+    protected Customer $customer;
     protected $creator;
     protected string $action = 'created';
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(Order $order, $creator = null, string $action = 'created')
+    public function __construct(Customer $customer, $creator = null, string $action = 'created')
     {
-        $this->order = $order;
+        $this->customer = $customer;
         $this->creator = $creator;
         $this->action = $action;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
         return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
         $mailMessage = (new MailMessage)
-            ->subject("New Order: {$this->order->order_number}")
-            ->line("Order for customer: " . $this->order->customer->name)
+            ->subject('New Customer: ' . $this->customer->name)
+            ->line('A new customer has been added: ' . $this->customer->name)
             ->line('Created by: ' . ($this->creator->name ?? 'System'))
-            ->line("Amount: $" . number_format($this->order->amount, 2))
-            ->action('View Order', url("/orders/{$this->order->id}"))
-            ->line('Thank you for using ImpactGuru CRM!');
+            ->action('View Customer', url('/customers/' . $this->customer->id))
+            ->line('Thank you for using ImpactGuru CRM');
         
         // Send from the creator's email address if available
         if ($this->creator && $this->creator->email) {
@@ -57,18 +45,14 @@ class NewOrderNotification extends Notification implements ShouldQueue
         return $mailMessage;
     }
 
-    /**
-     * Get the array representation of the notification.
-     */
     public function toArray(object $notifiable): array
     {
         $message = $this->action === 'deleted'
-            ? "Order {$this->order->order_number} deleted"
-            : "Order {$this->order->order_number} created";
+            ? "Customer {$this->customer->name} deleted"
+            : "Customer {$this->customer->name} created";
 
         return [
-            'order_id' => $this->order->id,
-            'order_number' => $this->order->order_number,
+            'customer_id' => $this->customer->id,
             'action' => $this->action,
             'message' => $message,
             'created_by_id' => $this->creator->id ?? null,

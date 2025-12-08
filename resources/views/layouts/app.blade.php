@@ -32,5 +32,10 @@
                 {{ $slot }}
             </main>
         </div>
+        @auth
+            @include('partials.flash_toast')
+            @include('partials.notification_toasts')
+            @stack('scripts')
+        @endauth
     </body>
 </html>

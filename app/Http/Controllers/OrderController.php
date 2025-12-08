@@ -50,9 +50,10 @@ class OrderController extends Controller
 
         $order = Order::create($validated);
 
-        // Notify all admins about the new order
-        User::where('role', 'admin')->get()->each(function($admin) use ($order) {
-            $admin->notify(new NewOrderNotification($order));
+        // Notify all admins about the new order (include creator)
+        $creator = auth()->user();
+        User::where('role', 'admin')->get()->each(function($admin) use ($order, $creator) {
+            $admin->notify(new NewOrderNotification($order, $creator, 'created'));
         });
 
         return redirect()->route('orders.index')->with('success', 'Order created successfully');
@@ -99,6 +100,13 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
+
+        // Notify admins about deletion
+        $creator = auth()->user();
+        User::where('role', 'admin')->get()->each(function($admin) use ($order, $creator) {
+            $admin->notify(new NewOrderNotification($order, $creator, 'deleted'));
+        });
+
         return redirect()->route('orders.index')->with('success', 'Order deleted successfully');
     }
 

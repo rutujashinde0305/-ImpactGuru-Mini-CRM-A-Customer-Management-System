@@ -4,14 +4,6 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Customers') }}
             </h2>
-            @if(auth()->user()->role === 'admin')
-                <a 
-                    href="{{ route('customers.trashed') }}" 
-                    class="text-sm px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded transition"
-                >
-                    View Deleted
-                </a>
-            @endif
         </div>
     </x-slot>
 

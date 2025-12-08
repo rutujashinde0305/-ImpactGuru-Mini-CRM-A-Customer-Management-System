@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <form action="{{ route('users.store') }}" method="POST" class="space-y-6">
+                    <form action="{{ route('users.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Name -->
@@ -78,6 +78,15 @@
                         <div>
                             <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm Password</label>
                             <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirm password" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div>
+                            <label for="profile_image" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Profile Image</label>
+                            <input id="profile_image" name="profile_image" type="file" accept="image/*" class="w-full">
+                            @error('profile_image')
+                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Actions -->

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use App\Models\User;
+use App\Notifications\NewCustomerNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,8 +46,15 @@ class CustomerController extends Controller
             $path = $request->file('profile_image')->store('profiles','public');
             $data['profile_image'] = $path;
         }
-        Customer::create($data);
-        return redirect()->route('customers.index')->with('success','Customer added');
+        $customer = Customer::create($data);
+
+        // Notify admins about new customer (include creator)
+        $creator = auth()->user();
+        User::where('role', 'admin')->get()->each(function($admin) use ($customer, $creator) {
+            $admin->notify(new NewCustomerNotification($customer, $creator, 'created'));
+        });
+
+        return redirect()->route('customers.index')->with('success','Customer created successfully');
     }
 
     /**
@@ -85,6 +94,13 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->delete(); // soft delete
+
+        // Notify admins about deletion
+        $creator = auth()->user();
+        User::where('role', 'admin')->get()->each(function($admin) use ($customer, $creator) {
+            $admin->notify(new NewCustomerNotification($customer, $creator, 'deleted'));
+        });
+
         return redirect()->route('customers.index')->with('success','Customer deleted');
     }
 

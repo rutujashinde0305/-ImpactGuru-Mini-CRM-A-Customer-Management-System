@@ -29,6 +29,7 @@
                                     <th class="px-6 py-3 text-left font-medium">Name</th>
                                     <th class="px-6 py-3 text-left font-medium">Email</th>
                                     <th class="px-6 py-3 text-left font-medium">Role</th>
+                                    <th class="px-6 py-3 text-left font-medium">Profile</th>
                                     <th class="px-6 py-3 text-center font-medium">Actions</th>
                                 </tr>
                             </thead>
@@ -39,6 +40,13 @@
                                         <td class="px-6 py-4 font-medium">{{ $user->name }}</td>
                                         <td class="px-6 py-4">{{ $user->email }}</td>
                                         <td class="px-6 py-4">{{ ucfirst($user->role) }}</td>
+                                        <td class="px-6 py-4">
+                                            @if($user->profile_image)
+                                                <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile" class="w-10 h-10 rounded-full object-cover">
+                                            @else
+                                                <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-sm">—</div>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 text-center">
                                             <a href="{{ route('users.edit', $user) }}" class="inline-block px-3 py-1 text-sm bg-yellow-500 text-white rounded mr-2">Edit</a>
 

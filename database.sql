@@ -13,6 +13,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `role` varchar(255) NOT NULL DEFAULT 'staff',
+  `profile_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -20,8 +21,9 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Sample data for table `users`
-INSERT INTO `users` (`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`role`,`created_at`,`updated_at`) VALUES
-(1,'Test User','test@example.com',NULL,'$2y$10$92IXUNpkjO0rOQ5byMi..hashplaceholder..','testtoken','staff','2025-12-06 00:00:00','2025-12-06 00:00:00');
+INSERT INTO `users` (`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`role`,`profile_image`,`created_at`,`updated_at`) VALUES
+(1,'Test User','test@example.com',NULL,'$2y$10$92IXUNpkjO0rOQ5byMi..hashplaceholder..','testtoken','staff',NULL,'2025-12-06 00:00:00','2025-12-06 00:00:00'),
+(2,'Admin User','rutujashinde0305@gmail.com',NULL,'$2y$10$92IXUNpkjO0rOQ5byMi..hashplaceholder..','admintoken','admin',NULL,'2025-12-06 00:00:00','2025-12-06 00:00:00');
 
 -- Table structure for table `password_reset_tokens`
 DROP TABLE IF EXISTS `password_reset_tokens`;
@@ -102,6 +104,20 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_expires_at_index` (`expires_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table structure for table `notifications`
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE `notifications` (
+  `id` char(36) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
+  `notifiable_id` bigint unsigned NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `data` json NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

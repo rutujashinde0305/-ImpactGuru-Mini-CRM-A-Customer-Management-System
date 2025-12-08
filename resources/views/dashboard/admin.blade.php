@@ -165,6 +165,39 @@
                     <a href="{{ route('users.create') }}" class="px-3 py-2 bg-gray-600 text-white rounded">Add User</a>
                 </div>
             </div>
+
+            <!-- Notifications -->
+            <div class="mt-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Recent Notifications (Latest 5)</h3>
+                    <a href="{{ \Illuminate\Support\Facades\Route::has('notifications.index') ? route('notifications.index') : '#' }}" class="text-sm text-blue-600 hover:text-blue-800">View all →</a>
+                </div>
+
+                @if(!empty($unreadNotifications) && $unreadNotifications->count())
+                    <ul class="space-y-3">
+                        @foreach($unreadNotifications as $note)
+                            <li class="p-3 bg-gray-50 dark:bg-gray-700 rounded flex justify-between items-start">
+                                <div>
+                                    <div class="font-medium text-white">{{ $note->data['message'] ?? 'New notification' }}</div>
+                                    <div class="text-sm text-white">{{ $note->created_at->diffForHumans() }}</div>
+                                    @if(!empty($note->data['created_by_name']))
+                                        <div class="text-sm text-white">Created by: {{ $note->data['created_by_name'] }}</div>
+                                    @endif
+                                </div>
+                                <div>
+                                    @if(isset($note->data['order_id']))
+                                        <a href="{{ url('/orders/' . $note->data['order_id']) }}" class="text-white hover:text-gray-200">Open</a>
+                                    @elseif(isset($note->data['customer_id']))
+                                        <a href="{{ url('/customers/' . $note->data['customer_id']) }}" class="text-white hover:text-gray-200">Open</a>
+                                    @endif
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <div class="text-white">No new notifications.</div>
+                @endif
+            </div>
         </div>
     </div>
 </x-app-layout>

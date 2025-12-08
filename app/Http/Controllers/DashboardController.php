@@ -18,9 +18,11 @@ class DashboardController extends Controller
         $totalRevenue = Order::sum('amount');
         $recentCustomers = Customer::latest()->take(5)->get();
         $recentOrders = Order::latest()->take(5)->get();
+        $unreadNotifications = [];
 
         if (auth()->user()->role === 'admin') {
-            return view('dashboard.admin', compact('totalCustomers', 'totalOrders', 'totalRevenue', 'recentCustomers', 'recentOrders'));
+            $unreadNotifications = auth()->user()->unreadNotifications()->orderBy('created_at', 'desc')->take(5)->get();
+            return view('dashboard.admin', compact('totalCustomers', 'totalOrders', 'totalRevenue', 'recentCustomers', 'recentOrders', 'unreadNotifications'));
         }
 
         return view('dashboard.staff', compact('totalCustomers', 'totalOrders', 'totalRevenue', 'recentCustomers'));

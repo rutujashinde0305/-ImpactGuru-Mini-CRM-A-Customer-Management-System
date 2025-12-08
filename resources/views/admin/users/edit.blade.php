@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('users.update', $user) }}" method="POST">
+                    <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -49,6 +49,16 @@
                                 <label class="block text-xs text-gray-300 mb-2">Password (leave blank to keep)</label>
                                 <input type="password" name="password" class="w-full rounded px-4 py-3 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                             </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="block text-xs text-gray-300 mb-2">Profile Image</label>
+                            @if($user->profile_image)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Profile" class="w-20 h-20 rounded-full object-cover">
+                                </div>
+                            @endif
+                            <input type="file" name="profile_image" accept="image/*" class="w-full">
                         </div>
 
                         <div class="mt-6 flex items-center gap-3">
