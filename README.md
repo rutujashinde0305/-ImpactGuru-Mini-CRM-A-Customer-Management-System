@@ -17,71 +17,50 @@ Short description...
 5. `php artisan key:generate`
 6. `php artisan migrate --seed`
 7. `php artisan storage:link`
-8. `npm install && npm run dev`
 9. `php artisan serve`
 
 ## Default Admin (for local testing)
-
 - **Email:** `rutujashinde0305@gmail.com`
 - **Password:** `admin123`
 
-Note: This account is created/updated by `Database\Seeders\AdminSeeder`. Change the credentials in the seeder if you prefer a different admin.
 
 ## Features
 - Authentication (Laravel Breeze)
-- Roles: Admin & Staff
 - Customers CRUD, profile image, soft deletes
 - Orders CRUD, notifications
 - Exports (CSV/PDF)
-- REST API protected by Sanctum
 
 ## Roles & Permissions
 - Admin: full access
-- Staff: view/add/edit customers & orders (no delete users)
 Project Description
 -------------------
 ImpactGuru Mini CRM is a lightweight customer & order management application built with Laravel and Blade. It provides basic CRM functionality for managing customers, orders, notifications (in-app), file uploads (profile images), PDF export, and a small role-based admin interface.
-
 Installation Steps
 # ImpactGuru Mini CRM — Internship Project
 
-Project Title
 -------------
 ImpactGuru Mini CRM — A Customer Management System
 
 Project Overview
-----------------
 This application helps manage customers, their orders, and access roles (Admin, Staff). The project demonstrates Laravel fundamentals: authentication (Breeze), routing, Eloquent, Blade, file uploads, middleware, notifications, REST APIs (Sanctum), and Git + GitHub usage.
 
-Technical Requirements
 ----------------------
 - Laravel 10/12 (project uses Laravel 12)
 - PHP >= 8.1
 - MySQL (or SQLite for quick local testing)
 - Node.js + npm (build assets)
 
-Quick Installation
-------------------
 1. Clone repository and enter folder:
 
 	git clone https://github.com/rutujashinde0305/-ImpactGuru-Mini-CRM-A-Customer-Management-System.git
 	cd impactguru-crm
 
-2. Install dependencies:
-
 	composer install
 	npm install
 
-3. Configure environment:
 
 	cp .env.example .env
 	php artisan key:generate
-	Edit `.env` to set DB connection, `APP_URL`, `QUEUE_CONNECTION`, and `MAIL_*` if you plan to send email.
-
-	Important `.env` keys:
-	- `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
-	- `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`
-	- `QUEUE_CONNECTION` (use `sync` for simple local tests)
 
 4. Migrate and seed sample data:
 
