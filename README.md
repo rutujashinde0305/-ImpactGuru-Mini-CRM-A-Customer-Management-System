@@ -31,11 +31,57 @@ Short description...
 - Exports (CSV/PDF)
 
 ## Roles & Permissions
-- Admin: full access
 Project Description
--------------------
 ImpactGuru Mini CRM is a lightweight customer & order management application built with Laravel and Blade. It provides basic CRM functionality for managing customers, orders, notifications (in-app), file uploads (profile images), PDF export, and a small role-based admin interface.
 Installation Steps
+Project Structure (tree)
+------------------------
+Here's a compact file-tree showing the top-level layout and key files:
+
+```
+impactguru-crm/
+├─ app/
+│  ├─ Http/
+│  │  ├─ Controllers/
+│  │  │  ├─ Api/
+│  │  │  │  ├─ CustomerApiController.php
+│  │  │  │  └─ OrderApiController.php
+│  │  │  ├─ CustomerController.php
+│  │  │  ├─ OrderController.php
+│  │  │  └─ AjaxNotificationController.php
+│  │  ├─ Middleware/
+│  │  │  ├─ IsAdmin.php
+│  │  │  └─ IsStaffOrAdmin.php
+│  ├─ Models/
+│  │  ├─ Customer.php
+│  │  └─ Order.php
+│  └─ Notifications/
+│     ├─ NewCustomerNotification.php
+│     └─ NewOrderNotification.php
+├─ config/
+├─ database/
+│  ├─ migrations/
+│  └─ database.sql
+├─ public/
+├─ resources/
+│  ├─ views/
+│  │  ├─ auth/
+│  │  ├─ customers/
+│  │  ├─ orders/
+│  │  └─ dashboard/
+│  └─ images/
+├─ routes/
+│  ├─ web.php
+│  └─ api.php
+├─ storage/
+├─ tests/
+├─ composer.json
+├─ package.json
+└─ README.md
+
+```
+
+If you'd like, I can expand this to include every file (longer tree) or generate it automatically from the repository and add it to the README.
 # ImpactGuru Mini CRM — Internship Project
 
 -------------
