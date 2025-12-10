@@ -187,14 +187,39 @@ Submission Checklist
 - `.env.example` included
 - `README.md` (this file) — installation and usage
 - `database.sql` (SQL dump) included
-- Screenshots (optional) in `images/` if desired
+- Screenshots 
+ 
+## Screenshots
+Below are screenshots from the running application (images are in the `images/` folder):
 
-Optional next steps I can do for you
------------------------------------
-- Clean and consolidate the `README.md` (I will commit and push the cleaned version if you want).
-- Add short API examples (curl/postman) or include a small script that creates a personal token.
-- Remove the temporary debug route and push the change.
+- Homepage
+	![Homepage](images/homepage.png)
+	*Landing page / welcome view.*
 
-Contact / Notes
----------------
-If you want me to make the README edits now and push them to GitHub, reply: "Yes — update README" and tell me whether to keep or remove the demo admin credentials listed in the README.
+- Add New Customer
+	![Add Customer](images/customer-create.png)
+	*Customer creation form with profile image upload.*
+
+- Customers List
+	![Customer List](images/customer-list.png)
+	*Paginated customers listing with search.*
+
+- Create New Order
+	![Create Order](images/order-create.png)
+	*Order creation form linked to a customer.*
+
+- Orders List
+	![Orders List](images/order-list.png)
+	*List of orders with status and actions.*
+
+- Orders List (Admin view)
+	![Admin Orders List](images/aorder-list.png)
+	*Admin orders list showing admin actions.*
+
+- Admin Dashboard
+	![Admin Dashboard](images/dashboard.png)
+	*Overview with stats for admins.*
+
+- Staff Dashboard
+	![Staff Dashboard](images/staff-dashboard.png)
+	*Dashboard view shown to staff users.*
